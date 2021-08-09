@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <title>Cadastros</title>
+
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .strokeme
+      {
+          color: black;
+          text-shadow:
+          -1px -1px 0 #FFF,
+          1px -1px 0 #FFF,
+          -1px 1px 0 #FFF,
+          1px 1px 0 #FFF;  
+      }
+      
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/heroes.css') }}" rel="stylesheet">
+  </head>
+  <body>
+    
+<main>
+  <div class="px-4 py-5 my-5 text-center">
+    <img src="{{ url_for('static', filename='svg/moisture.svg') }}" width="65" >
+    <h1 class="display-5 fw-bold">Cadastro de Peso</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Opte entre utilizar valor histórico ou cadastrar a leitura atual do sensor de peso.</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal" data-bs-target="#cadastroPeso" id="pesoModal">Ler o sensor</button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Valor histórico</button>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <form action="" method="POST" enctype="multipart/form-data">
+      {{ pesoForm.hidden_tag() }}
+    <div class="modal fade" id="cadastroPeso" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cadastroPesoLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cadastroPesoLabel">Pesagem em andamento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-floating">
+              {% if pesoForm.userPeso.errors %}
+                  {{ pesoForm.userPeso(class="pesoForm-control is-invalid", placeholder="Senha") }}
+                  <div class="invalid-feedback">
+                      {% for error in pesoForm.userPeso.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ pesoForm.userPeso(class="form-control", placeholder="Senha") }}
+              {% endif %}            
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            {{ pesoForm.submitPeso(class="btn btn-primary") }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="b-example-divider"></div>
+
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6 border rounded-3 bg-light" >
+        <div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" style="background-color: rgb(99, 99, 99);" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" style="background-color: rgb(99, 99, 99);" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" style="background-color: rgb(99, 99, 99);" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner" >
+            <div class="carousel-item active" >
+              <img src="{{ fonte1.imagem }}" class="d-block w-100" alt="fonte1">
+              <div class="carousel-caption d-none d-md-block">
+                <h5 class="strokeme">{{ fonte1.nome }}</h5>
+                <p class="strokeme">{{ fonte1.quantidade }}</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img src="{{ url_for('static', filename='images/fontes/coca.jpg') }}" class="d-block w-100" alt="{{ url_for('static', filename='images/fontes/coca.jpg') }}">
+              <div class="carousel-caption d-none d-md-block">
+                <h5 class="strokeme">Second slide label</h5>
+                <p class="strokeme">Some representative placeholder content for the second slide.</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img src="{{ url_for('static', filename='images/fontes/coca.jpg') }}" class="d-block w-100" alt="{{ url_for('static', filename='images/fontes/coca.jpg') }}">
+              <div class="carousel-caption d-none d-md-block">
+                <h5 class="strokeme">Third slide label</h5>
+                <p class="strokeme">Some representative placeholder content for the third slide.</p>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3">Cadastro de Fontes</h1>
+        <p class="lead">As opções a seguir são as atualmente ativas com seus respectivos valores, caso deseje cadastrar uma nova clique em cadastro, caso queira remover uma fonte clique em remover.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 " data-bs-toggle="modal" data-bs-target="#cadastroFonte">Cadastro</button>
+          <button type="button" class="btn btn-danger btn-lg px-4 me-md-2 " data-bs-toggle="modal" data-bs-target="#removerFonte">Remover</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="cadastroFonte" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cadastroFonteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cadastroFonteLabel">Cadastro de Fonte</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Salvar Alterações</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="removerFonte" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="removerFonteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="removerFonteLabel">Remover uma Fonte</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Salvar Alterações</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="b-example-divider"></div>
+
+  <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 fw-bold lh-1 mb-3">Cadastro de Crédito para um Cliente</h1>
+        <p class="col-lg-10 fs-4">Selecione um cliente da lista de Clientes, insira um valor de criptopontos e insira sua senha para confirmar.</p>
+      </div>
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form class="p-4 p-md-5 border rounded-3 bg-light">
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+              <option value="3">Three</option>
+            </select>
+          <div class="form-floating mb-3">
+            <div class="input-group">
+              <span class="input-group-text"><img src="{{ url_for('static', filename='svg/currency-bitcoin.svg') }}" ></span>
+              <input type="number" class="form-control" id="floatingValue" placeholder="Valor">
+            </div>
+            
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Senha</label>
+          </div>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Pontuar</button>
+          <hr class="my-4">
+          <small class="text-muted">Ao clicar você será redirecionado para página de dashboards.</small>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="b-example-divider"></div>
+
+  <div class="px-4 py-5 my-5 text-center">
+    <img src="{{ url_for('static', filename='svg/cup-straw.svg') }}" width="85" >
+    <h1 class="display-5 fw-bold">Cadastro de Bebida</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Escolha entre opção de criação de uma bebida com as Fontes ativas ou criar um com opções de Fontes previamente cadastradas e inativas.</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal" data-bs-target="#fontesAtivas" id="fontesAtivasBtn">Fontes Ativas</button>
+        <button type="button" class="btn btn-warning btn-lg px-4" data-bs-toggle="modal" data-bs-target="#fontesInativas">Fontes Inativas</button>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <form action="" method="POST" enctype="multipart/form-data">
+    {{ bebidaForm.hidden_tag() }}
+    <div class="modal fade" id="fontesAtivas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="fontesAtivasLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="fontesAtivasLabel">Cadastro de Bebidas com fontes Ativas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-floating">
+              {{ bebidaForm.picture(class="form-control-file") }}
+              {% if bebidaForm.picture.errors %}
+                {% for error in bebidaForm.picture.errors %}
+                    <span class="text-danger">{{ error }}</span></br>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            {{ bebidaForm.submitBebida(class="btn btn-primary") }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  <div class="modal fade" id="fontesInativas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="fontesInativasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="fontesInativasLabel">Cadastro de Bebidas com fontes registradas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Criar Bebida</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+      if ('{{ bebidaClick }}'){
+        document.getElementById('fontesAtivasBtn').click();
+      }
+      else if ('{{ pesoClick }}'){
+        document.getElementById('pesoModal').click();
+      }
+    </script>
+      
+  </body>
+</html>

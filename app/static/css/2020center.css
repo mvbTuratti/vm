@@ -1,0 +1,35 @@
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content {
+    flex: 0 0 320px;
+    text-align: center;
+}
+.warraper {
+    width: 1024px;
+    margin: 0 auto; 
+ }
+
+#hideMe {
+    -moz-animation: cssAnimation 0s ease-in 3s forwards;
+    /* Firefox */
+    -webkit-animation: cssAnimation 0s ease-in 3s forwards;
+    /* Safari and Chrome */
+    -o-animation: cssAnimation 0s ease-in 3s forwards;
+    /* Opera */
+    animation: cssAnimation 0s ease-in 3s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    to {
+        visibility: hidden;
+    }
+}

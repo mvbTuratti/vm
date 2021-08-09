@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>SmartBar - Oficinas 2</title>
+<!--
+
+DIGITAL TREND
+
+https://templatemo.com/tm-538-digital-trend
+
+-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-digital-trend.css') }}">
+
+</head>
+<body>
+
+    <!-- MENU BAR -->
+    <nav class="navbar navbar-expand-lg position-relative">
+        <div class="container">
+            <div class="col-lg-2"><img src="{{ url_for('static', filename='svg/cup-straw.svg') }}" width="60">
+                <i class="bi bi-cup-straw"> <b>Smart</b>Bar</i></div>
+            
+
+            <div class="d-flex bd-highlight">
+                <div class="p-1 flex-fill bd-highlight">
+                        <a href="{{ url_for('static', filename='pdf/plano.pdf') }}" class="nav-link contact" download>Plano de Projeto</a>
+                </div>
+                <div class="p-1 flex-fill bd-highlight">
+                        <a href="#ent" class="nav-link contact">Entregáveis</a>
+                </div>
+                <div class="p-1 flex-fill bd-highlight">
+                        <a href="#footers" class="nav-link contact">Integrantes</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- PROJECT DETAIL -->
+    <section class="project-detail section-padding-half">
+        <div class="container">
+            <div class="row">
+
+                    <div class="col-lg-9 mx-auto col-md-10 col-12 mt-lg-5 text-center" data-aos="fade-up">
+
+                    <h4>Oficinas 2</h4>
+
+                    <h3>Tendo em vista a crescente automatização de processos manuais, problemas com comandas e manuseio de dinheiro em festas, o projeto tem como fim proporcionar a experiência de bebidas de bar sem a necessidade de interação humana no preparo e pagamento.</h3>
+                    </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="full-image text-center">
+        <a href="{{ url_for('root_app') }}"> <video autoplay loop muted inline width="90%"> <source src="{{ url_for('static', filename='images/bebidas1.mp4') }}"  type="video/mp4" alt="interview process"></video></a>
+    
+    </div>
+
+    <!-- PROJECT DETAIL -->
+    <section class="project-detail section-padding">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-12 mb-5">
+
+                    <img src="{{ url_for('static', filename='images/working-girl.png') }}" class="img-fluid" alt="personal website" data-aos="fade-up">
+                    </div>
+
+                    <div class="col-lg-5 col-md-6 mr-lg-auto mt-lg-5 col-12" data-aos="fade-up" data-aos-delay="200">
+
+                    <h2>Desenvolvimento do projeto</h2>
+
+                    <p class="mt-3 mb-4">Devido ao curto prazo que a matéria fornece, o blog trará constante updates do progresso até então.</p>
+
+                    <ul class="list-detail">
+                        <li><span><a href="#e2">Entregável 2</a></span></li>
+                        <li><span><a href="#e3">Entregável 3</a></span></li>
+                        <li><span><a href="#e4">Entregável 4</a></span></li>
+                        <li><span><a href="#e5">Entregável 5</a></span></li>
+                    </ul>
+                    </div>
+            </div>
+
+            <div class="col-lg-9 mx-auto col-12" data-aos="fade-up">
+                <div class="client-info mt-lg-5 py-lg-5">
+                    <h3>Diagrama de blocos</h3>
+                </div>
+                <div class="full-image text-center" data-aos="zoom-in">
+                <img src="{{ url_for('static', filename='images/diagrama.png') }}" class="img-fluid" alt="interview process">
+                </div>
+                <p class="mt-3 mb-4">O diagrama mostra todas as interações esperadas do sistema, em que usuários interagem diretamente com o sistema utilizando um website, o site é hospedado na nuvem Azure e possui um banco de dados internos que
+                é responsável por persistir informações de créditos e registros históricos de vendas. Após os usuários selecionarem comandos de compra de bebidas o sistema confirma se há ou não presença de copos, checa pesos limites e caso
+                esteja dentro dos parâmetros adequados, despeja o drink solicitado, utilizando bombas peristáutica que retiram líquido diretamente de garrafas de bebida, finalizando com um gelo que é dispensado no copo.</p>
+                </div>
+            <div class="col-lg-9 mx-auto col-12" data-aos="fade-up" id="schedule">
+                    <h3>Schedule</h3>
+                    <div>
+                    <img src="{{ url_for('static', filename='images/newsletter.png') }}" width="500" height="400" class="img-fluid" alt="schedule">
+
+                    <a href="https://docs.google.com/spreadsheets/d/1oinIaGECioSk7ImVLZIM7tvNnt9PvSmKvX52TTydd1g/edit?usp=sharing" class="button-schedule" target="_blank">Link to Schedule</a>
+                    </div>
+            </div>
+
+            <form class="form-inline" method="POST" id="ent">
+              <div class="col-lg-9 mx-auto col-12" data-aos="fade-up" id="e2">
+                  <h3>Entregável 2 (21/07)</h3>
+                      <div class="col-lg-8 mx-auto col-10">
+                        <input type="submit" class="btn" name="e2" value="Acesse a postagem">  
+                        
+                      </div>
+              </div>
+              <div class="col-lg-9 mx-auto col-12" data-aos="fade-up" id="e3">
+                  <h3>Entregável 3 (28/07)</h3>
+                  <div class="col-lg-8 mx-auto col-10">
+                    <input type="submit" class="btn" name="e3" value="Acesse a postagem">  
+                    
+                  </div>
+              </div>
+              <div class="col-lg-9 mx-auto col-12" data-aos="fade-up" id="e4">
+                  <h3>Entregável 4 (04/08)</h3>
+                  <div class="col-lg-8 mx-auto col-10">
+                    <input type="submit" class="btn" name="e4" value="Acesse a postagem">  
+                    
+                  </div>
+              </div>
+              <div class="col-lg-9 mx-auto col-12" data-aos="fade-up" id="e5">
+                  <h3>Entregável 5 (11/08)</h3>
+                  <div class="col-lg-8 mx-auto col-10">
+                    <input type="submit" class="btn" name="e5" value="Acesse a postagem">  
+                    
+                  </div>
+              </div>
+          </form>
+        </div>
+    </section>
+
+
+    <footer class="site-footer" id="footers">
+    <div class="container">
+        <div class="row">
+
+        <div class="col-lg-4 mx-lg-auto col-md-8 col-10">
+            <h1 class="text-white" data-aos="fade-up" data-aos-delay="100">Quando o assunto é <strong>bebida</strong> pode contar com os universitários.</h1>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="200">
+            <h4 class="my-4">Informações de contato</h4>
+
+            <div class="contact-info">
+            <p class="mb-1">
+                Matheus Turatti
+            </p>
+            <p class="mb-1">
+                <i class="fa fa-envelope mr-2 footer-icon"></i>
+                turatti@alunos.utfpr.edu.br
+            </p>
+            </div>
+            <div style="padding:1rem">
+            <p class="mb-1">
+                Murilo Mascarin
+            </p>
+            <p class="mb-1">
+
+                muriloguimaraes@alunos.utfpr.edu.br
+            </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="contact-info" style="margin-top:4.5rem">
+            <p class="mb-1">
+                Thomaz Suzuki
+            </p>
+            <p class="mb-1">
+                <i class="fa fa-envelope mr-2 footer-icon"></i>
+                thomazhugo@alunos.utfpr.edu.br
+            </p>
+            </div>
+        </div>
+        </div>
+    </div>
+    </footer>
+
+
+    <!-- SCRIPTS -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/aos.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+
+</body>
+</html>

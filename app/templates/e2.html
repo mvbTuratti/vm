@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>SmartBar - Oficinas 2</title>
+<!--
+
+DIGITAL TREND
+
+https://templatemo.com/tm-538-digital-trend
+
+-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-digital-trend.css') }}">
+
+</head>
+<body>
+
+    <!-- MENU BAR -->
+    <nav class="navbar navbar-expand-lg position-relative">
+        <div class="container">
+            <div class="col-lg-4"><img src="{{ url_for('static', filename='svg/cup-straw.svg') }}" width="60">
+                <i class="bi bi-cup-straw"> <b>Smart</b>Bar</i></div>
+            
+
+            <div class="d-flex bd-highlight">
+                <div class="p-2 flex-fill bd-highlight">
+                        <a href="{{ url_for('static', filename='pdf/plano.pdf') }}" class="nav-link contact" download>Plano de Projeto</a>
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                        <a href="#footers" class="nav-link contact">Integrantes</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- PROJECT DETAIL -->
+    <section class="project-detail section-padding-half">
+        <div class="container">
+            <div class="row">
+
+                    <div class="col-lg-9 mx-auto col-md-10 col-12 mt-lg-5 text-center" data-aos="fade-up">
+                    <h4>Entregável 2</h4>
+                    </div>
+                    
+                    <div><h3>Modelo</h3>
+                        <p class="mt-3 mb-4">Na primeira semana após a aprovação do nosso projeto, tentamos realizar as compras dos materiais nas lojas localmente pois já estávamos atrasados e não queríamos esperar a entrega, porém materiais essenciais nós não achamos disponíveis para a venda, então resolvemos pedir pela internet mesmo.
+                        </p> </div>
+                    
+<img src="{{ url_for('static', filename='images/123.jpeg') }}" class="img-fluid center-me" alt="MDF" data-aos="fade-up">
+<p class="mt-3 mb-4">Decidimos fazer a estrutura do projeto em mdf, modelamos no autocad como seria a “caixa” do smart bartender, porém ela ainda não está pronta.
+</p>
+<div><h3>Componentes</h3> 
+    <p class="mt-3 mb-4">A aquisição das bombas peristáuticas se provou mais complexo do que o previsto, visto que nenhuma das lojas próximas possuia os componentes necessários, fizemos aquisição online das bombas e outros componentes serão adquiridos dia 22/07 para testagem imbutida no Raspberry Pi.</p></div>
+<img src="{{ url_for('static', filename='images/3.jpeg') }}" class="img-fluid center-me" alt="bomba"/>
+            <div><h3>Raspberry Pi</h3>
+                <p class="mt-3 mb-4">Aprendemos o básico do RaspBerrypi e bootamos ele. Estamos avaliando qual a melhor forma para o host do site, temos a alternativa de utilizar o Ngrok para fazer o host do site dentro do RBP, porém o azure é nossa primeira alternativa, hosteando o site na nuvem e o RBP conversando com a nuvem e executar os comando localmente. e estamos vendo também sobre usar o azure  IOT para deixar um link estático para acessar o site, o problema dessa solução é que o azure  IOT é pago. Ou usar outra ferramenta que se comunique utilizando somente o ssh, porém nesse cenário não teríamos tanta segurança como no azure</p></div>
+            </div>
+            <img src="{{ url_for('static', filename='images/4.jpeg') }}" class="img-fluid center-me" alt="ngrok"/>
+        </div>
+    </section>
+
+    <footer class="site-footer" id="footers">
+    <div class="container">
+        <div class="row">
+
+        <div class="col-lg-4 mx-lg-auto col-md-8 col-10">
+            <h1 class="text-white" data-aos="fade-up" data-aos-delay="100">Quando o assunto é <strong>bebida</strong> pode contar com os universitários.</h1>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="200">
+            <h4 class="my-4">Informações de contato</h4>
+
+            <div class="contact-info">
+            <p class="mb-1">
+                Matheus Turatti
+            </p>
+            <p class="mb-1">
+                <i class="fa fa-envelope mr-2 footer-icon"></i>
+                turatti@alunos.utfpr.edu.br
+            </p>
+            </div>
+            <div style="padding:1rem">
+            <p class="mb-1">
+                Murilo Mascarin
+            </p>
+            <p class="mb-1">
+
+                muriloguimaraes@alunos.utfpr.edu.br
+            </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="contact-info" style="margin-top:4.5rem">
+            <p class="mb-1">
+                Thomaz Suzuki
+            </p>
+            <p class="mb-1">
+                <i class="fa fa-envelope mr-2 footer-icon"></i>
+                thomazhugo@alunos.utfpr.edu.br
+            </p>
+            </div>
+        </div>
+        </div>
+    </div>
+    </footer>
+
+
+    <!-- SCRIPTS -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/aos.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Login SmartBar</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/2020center.css') }}" rel="stylesheet">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet">
+    
+  </head>
+  <body class="text-center">
+    
+<main class="form-signin">
+  <form method="POST" action="">
+    {{ form.hidden_tag() }}
+    
+    <div><img src="{{ url_for('static', filename='svg/cup-straw.svg') }}" width="65" ><i class="bi bi-cup-straw" style="font-size: 1.5rem; color: rgb(3, 73, 202);"> <b>Smart</b>Bar</i></div>
+    <h1 class="h3 mb-3 fw-normal">Entre na sua conta</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="content alert alert-{{ category }}" id="hideMe">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+      <div class="form-floating">
+        {% if form.username.errors %}
+            {{ form.username(class="form-control is-invalid", placeholder="Usuario") }}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.username(class="form-control", placeholder="Usuario") }}
+        {% endif %}
+      <label for="floatingInput">Usuario</label>
+    </div>
+    <div class="form-floating">
+        {% if form.password.errors %}
+            {{ form.password(class="form-control is-invalid", placeholder="Senha") }}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.password(class="form-control", placeholder="Senha") }}
+        {% endif %}
+      
+      <label for="floatingPassword">Senha</label>
+    </div>
+    <div class="checkbox mb-3">
+      {{ form.remember(class="form-check-input") }}
+      {{ form.remember.label(class="form-check-label") }}        
+    </div>
+      {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
+      <div class="border-top pt-3">
+        <small class="text-muted">
+            Não possui uma conta? <a href="{{ url_for('registration') }}" class="ml-2">Criar</a>
+        </small>
+    </div>
+  </form>
+</main>
+
+
+    
+  </body>
+</html>

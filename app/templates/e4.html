@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>SmartBar - Oficinas 2</title>
+<!--
+
+DIGITAL TREND
+
+https://templatemo.com/tm-538-digital-trend
+
+-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-digital-trend.css') }}">
+
+</head>
+<body>
+
+    <!-- MENU BAR -->
+    <nav class="navbar navbar-expand-lg position-relative">
+        <div class="container">
+            <div class="col-lg-4"><img src="{{ url_for('static', filename='svg/cup-straw.svg') }}" width="60">
+                <i class="bi bi-cup-straw"> <b>Smart</b>Bar</i></div>
+            
+
+            <div class="d-flex bd-highlight">
+                <div class="p-2 flex-fill bd-highlight">
+                        <a href="{{ url_for('static', filename='pdf/plano.pdf') }}" class="nav-link contact" download>Plano de Projeto</a>
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                        <a href="#footers" class="nav-link contact">Integrantes</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- PROJECT DETAIL -->
+    <section class="project-detail section-padding-half">
+        <div class="container">
+            <div class="row">
+
+                    <div class="col-lg-9 mx-auto col-md-10 col-12 mt-lg-5 text-center" data-aos="fade-up">
+                        <h4>Entregável 4</h4>
+                        <p class="mt-3 mb-4">Esse entregável consiste no projeto de software com UML.</p>
+                        
+                    </div>
+                    <div>
+                        <h3>Catching up...</h3>
+                        <p class="mt-3 mb-4">Após conversas finais, o projeto em mdf foi entregue e voltamos a fazer as montagens necessárias.</p>
+                        <video class="embed-responsive-item center-me" src="{{ url_for('static', filename='images/entrega4/video1.mp4') }}" allowfullscreen controls muted></video>
+                        <p class="mt-3 mb-4">Com o mdf em mãos, dividimos a equipe de três pessoas em dois grupos, motivados por um dos membros ter 
+                            sintomas de covid a parte hardware foi separada do software. Dois membros ficaram responsáveis por avançar com a parte da montagem física
+                        e o outro membro com a modelagem e avanços na parte de frontend e backend.</p>
+                        <h3>Bombas</h3>
+                        <p class="mt-3 mb-4">Após discussão interna ficou decidido colocar as bombas peristálticas na parte da frente da caixa.</p>
+                        <img src="{{ url_for('static', filename='images/entrega4/imagem1.jpeg') }}" width="200" class="img-fluid center-me" alt="bomba1" data-aos="fade-up">
+                        <p class="mt-3 mb-4">Essa escolha foi puramente estética. Com essa montagem avançamos para a conexão com o sensor de proximidade e checamos se continuavam com o comportamento previamente testado.</p>
+                        <video class="embed-responsive-item center-me" src="{{ url_for('static', filename='images/entrega4/video2.mp4') }}" allowfullscreen controls></video>
+                        <h3>Ice Dispatcher</h3>
+                        <p class="mt-3 mb-4">Conseguimos chegar num consenso de como prosseguir com o desafio de oferecer gelo para os drinks,
+                             isso foi resolvido com um simples servo motor que empurra de um cilindro vertical, um gelo por vez.
+                        </p>
+                        <video class="embed-responsive-item center-me" src="{{ url_for('static', filename='images/entrega4/video3.mp4') }}" allowfullscreen controls></video>
+                    </div>
+                    <div>
+                        <h3>Diagramas</h3>
+                        <p class="mt-3 mb-4">O projeto se resume a cadastros por parte de um usuário administrador e consumo por parte do cliente.</p>
+                        <h4>Casos de Uso</h4>
+                        <img src="{{ url_for('static', filename='images/entrega4/usecases.png') }}" class="img-fluid" alt="usecases" data-aos="fade-up">
+                        <p class="mt-3 mb-4">O diagrama relata que essencialmente são apenas dois os Atores que interagem com o sistema, sendo que o Administrador possui
+                            diversas funções que, conforme poderemos averiguar nos diagramas de sequência, garantem a disponibilidade do sistema.
+                        </p>
+                        <h4>Sequência</h4>
+                        <p class="mt-3 mb-4">Começando pela sequência de interações que ocorrem durante a compra de uma bebida, temos então a principal interação do Cliente com o sistema.</p>
+                        <img src="{{ url_for('static', filename='images/entrega4/compra.png') }}" class="img-fluid" alt="compra" data-aos="fade-up">
+                        <p class="mt-3 mb-4">As outras funcionalidades que Cliente tem acesso, são Registrar uma conta e Logar na mesma.</p>
+                        <img src="{{ url_for('static', filename='images/entrega4/reg.png') }}" class="img-fluid center-me" alt="registro" data-aos="fade-up">
+                        <img src="{{ url_for('static', filename='images/entrega4/login.png') }}" class="img-fluid center-me" alt="login" data-aos="fade-up">
+                        <p class="mt-3 mb-4">Já as funções de Administrador se resumem a cadastros.</p>
+                        <h6>Cadastro de Fontes</h6>
+                        <img src="{{ url_for('static', filename='images/entrega4/cadastrofonte.png') }}" class="img-fluid" alt="fontes" data-aos="fade-up">
+                        <h6>Cadastro de Peso</h6>
+                        <img src="{{ url_for('static', filename='images/entrega4/cadastropeso.png') }}" class="img-fluid" alt="peso" data-aos="fade-up">
+                        <h6>Cadastro de Bebida</h6>
+                        <img src="{{ url_for('static', filename='images/entrega4/cadastrobebida.png') }}" class="img-fluid" alt="bebidas" data-aos="fade-up">
+                        <h6>Cadastro de Crédito</h6>
+                        <img src="{{ url_for('static', filename='images/entrega4/cadastrocredito.png') }}" class="img-fluid" alt="creditos" data-aos="fade-up">
+                        <h4>Fluxograma</h4>
+                        <p class="mt-3 mb-4">Um simples fluxograma de como a aplicação funcionaria pode ser observado a seguir:</p>
+                        <img src="{{ url_for('static', filename='images/entrega4/fluxograma.jpeg') }}" class="img-fluid center-me" alt="fluxograma" data-aos="fade-up">
+                        <h4>Diagrama de Transição de Estados</h4>
+                        <img src="{{ url_for('static', filename='images/entrega4/diagramatrans.png') }}" class="img-fluid" alt="fluxograma" data-aos="fade-up">
+                        <h4>Diagrama de Entidade-Relacionamento</h4>
+                        <p class="mt-3 mb-4">Modelar um banco de dados que auxiliasse na solução do problema foi um tanto quanto tranquilo, houve momentos
+                            de dúvida na hora de modelar as possíveis relações many to many entre Fontes e Bebidas, porém com auxílio da documentação do SQLAlchemy 
+                            conseguimos resolver.
+                        </p>
+                        <img src="{{ url_for('static', filename='images/entrega4/eer.png') }}" class="img-fluid center-me" alt="eer" data-aos="fade-up">
+                        <a href="{{ url_for('static', filename='images/entrega4/banco.pdf') }}" class="button-schedule center-me" target="_blank">Clique para acessar SQL Script</a>
+                        
+                        
+                    </div>
+                    
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer" id="footers">
+    <div class="container">
+        <div class="row">
+
+        <div class="col-lg-4 mx-lg-auto col-md-8 col-10">
+            <h1 class="text-white" data-aos="fade-up" data-aos-delay="100">Quando o assunto é <strong>bebida</strong> pode contar com os universitários.</h1>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="200">
+            <h4 class="my-4">Informações de contato</h4>
+
+            <div class="contact-info">
+            <p class="mb-1">
+                Matheus Turatti
+            </p>
+            <p class="mb-1">
+                <i class="fa fa-envelope mr-2 footer-icon"></i>
+                turatti@alunos.utfpr.edu.br
+            </p>
+            </div>
+            <div style="padding:1rem">
+            <p class="mb-1">
+                Murilo Mascarin
+            </p>
+            <p class="mb-1">
+
+                muriloguimaraes@alunos.utfpr.edu.br
+            </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="contact-info" style="margin-top:4.5rem">
+            <p class="mb-1">
+                Thomaz Suzuki
+            </p>
+            <p class="mb-1">
+                <i class="fa fa-envelope mr-2 footer-icon"></i>
+                thomazhugo@alunos.utfpr.edu.br
+            </p>
+            </div>
+        </div>
+        </div>
+    </div>
+    </footer>
+
+
+    <!-- SCRIPTS -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/aos.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+
+</body>
+</html>

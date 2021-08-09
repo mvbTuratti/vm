@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Registration SmartBar</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/2020center.css') }}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    
+<main class="form-signin">
+  <form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <div><img src="{{ url_for('static', filename='svg/cup-straw.svg') }}" width="65" ><i class="bi bi-cup-straw" style="font-size: 1.5rem; color: rgb(3, 73, 202);"> <b>Smart</b>Bar</i></div>
+    <h1 class="h3 mb-3 fw-normal">Crie uma conta</h1>
+    {% if form.admin.errors %}
+        <div class="content alert alert-danger">
+            {% for error in form.admin.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="form-floating">
+        {% if form.username.errors %}
+            {{ form.username(class="form-control is-invalid", placeholder="Usuario") }}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.username(class="form-control", placeholder="Usuario") }}
+        {% endif %}
+      <label for="floatingInput">Usuario</label>
+    </div>
+    <div class="form-floating">
+        {% if form.password.errors %}
+            {{ form.password(class="form-control is-invalid", placeholder="Senha") }}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.password(class="form-control", placeholder="Senha") }}
+        {% endif %}
+      
+      <label for="floatingPassword">Senha</label>
+    </div>
+    <div class="form-floating">
+        {% if form.confirm_password.errors %}
+            {{ form.confirm_password(class="form-control is-invalid", placeholder="Confirmar Senha") }}
+            <div class="invalid-feedback">
+                {% for error in form.confirm_password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.confirm_password(class="form-control", placeholder="Confirmar Senha") }}
+        {% endif %}
+      <label for="floatingPassword">Confirmar Senha</label>
+    </div>
+    <div class="form-row align-items-center">
+        <div class="col-auto">
+            <label class="mr-sm-2" for="inlineFormCustomSelect">Conta de administrador?</label>
+            <a class="btn btn-secondary" onclick="adminClick()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                </svg>
+            </a>
+            
+        </div>
+        
+        <div class="form-floating" style="display:none" id="admtag">
+            
+            {{ form.admin(class="form-control", placeholder="Token") }}
+            <label for="floatingToken">Token</label>
+            
+        </div>
+    </div>
+    
+    <div style="margin-top: 4px;">
+        {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Já possui uma conta? <a href="{{ url_for('root_app') }}" class="ml-2">Entrar</a>
+        </small>
+    </div>
+  </form>
+</main>
+
+
+    
+  </body>
+  <script>
+      function adminClick(){
+          let admtag = document.getElementById("admtag")
+          if (admtag.getAttribute("style") == "display:none"){
+            admtag.setAttribute("style","display:visible");
+          }else{
+            admtag.setAttribute("style","display:none");
+          }
+      }
+  </script>
+</html>
