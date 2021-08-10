@@ -4,7 +4,7 @@ from PIL import Image
 from flask import render_template, url_for, request, redirect, jsonify, flash, request
 from app import app, db, bcrypt
 from app.models import Usuario, Fonte, Quantidade, Bebida, Vendas
-from app.forms import RegistrationForm, LoginForm, BebidaForm, PesoForm
+from app.forms import RegistrationForm, LoginForm, BebidaForm, PesoForm, DinheiroForm, FontesAtivarForm, FontesRemoverForm
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/app",  methods=['POST', 'GET'])
@@ -83,23 +83,64 @@ def save_picture(form_picture):
 def heroes():
     bebidaForm = BebidaForm()
     pesoForm= PesoForm()
-    fonte1 = {'imagem':url_for('static', filename='images/fontes/default.jpg'),
+    dinheiroForm = DinheiroForm()
+    fonteAtivaForm = FontesAtivarForm()
+    forms = {'bebidaForm':bebidaForm, 'pesoForm':pesoForm,'dinheiroForm':dinheiroForm, 'fonteAtivaForm':fonteAtivaForm}
+    fontes = [{'imagem':url_for('static', filename=f'images/fontes/{fonte.image_file}'),
+                'nome':fonte.nome,
+                'quantidade':f'{fonte.atual}ml/{fonte.total}ml'} for fonte in Fonte.query.filter_by(available=1)]
+    while (len(fontes) < 3):
+        fontes += [{'imagem':url_for('static', filename='images/fontes/default.jpg'),
             'nome': 'Sem fonte cadastrada',
-            'quantidade': '0ml/0ml'}
+            'quantidade': '0ml/0ml'}]
+    dinheiroForm.usuarios.choices = [("", "Escolha um cliente")] + [(i.username,i.username) for i in Usuario.query.all() if i.admin==0]
     if request.method == 'POST':
         if bebidaForm.validate_on_submit():
             if bebidaForm.picture.data:
                 picture_file = save_picture(bebidaForm.picture.data)
+            
             return redirect(url_for('album'))
         elif bebidaForm.submitBebida.data:
-            return render_template('heroes.html', bebidaClick=True, fonte1=fonte1, bebidaForm=bebidaForm, pesoForm=pesoForm)
+            return render_template('heroes.html', bebidaClick=True, fontes=fontes, forms=forms)
 
+        if forms['dinheiroForm'].validate_on_submit():
+            try:
+                userInst = Usuario.query.filter_by(username=forms["dinheiroForm"].usuarios.data)[0]
+                userInst.dinheiro += forms["dinheiroForm"].dinheiro.data
+                db.session.commit()
+                flash(f'Adicionado {forms["dinheiroForm"].dinheiro.data} criptopontos para conta {forms["dinheiroForm"].usuarios.data}!', 'success')
+            except:
+                db.session.rollback()
+                flash(f'Um erro ocorreu!','danger')
+            return redirect(url_for('heroes'))
+        elif dinheiroForm.submitDinheiro.data:
+            return render_template('heroes.html', dinheiroClick=True, fontes=fontes, forms=forms)
+        
         if pesoForm.validate_on_submit():
             return redirect(url_for('album'))
         elif pesoForm.submitPeso.data:
-            return render_template('heroes.html', pesoClick=True, fonte1=fonte1, bebidaForm=bebidaForm, pesoForm=pesoForm)
-        
-    return render_template('heroes.html', fonte1=fonte1, bebidaForm=bebidaForm, pesoForm=pesoForm)
+            return render_template('heroes.html', pesoClick=True, fontes=fontes, forms=forms)
+        if fonteAtivaForm.validate_on_submit():
+            dic = {'nome':fonteAtivaForm.nome_fonte.data, 'total':fonteAtivaForm.atual.data,'atual':fonteAtivaForm.atual.data, 'available':1}
+            if fonteAtivaForm.image_fonte.data:
+                picture_file = save_picture(fonteAtivaForm.image_fonte.data)
+            else:
+                picture_file = 'default.jpg'    
+            dic.update({'image_file':picture_file})
+            db.session.add(Fonte(**dic))
+            try:
+                db.session.commit()
+                flash(f'Bebida {forms["fonteAtivaForm"].nome_fonte.data} cadastrada com sucesso!', 'success')
+                
+            except:
+                db.session.rollback()
+                flash(f'Um erro ocorreu!','danger')
+            return redirect(url_for('heroes'))
+        elif fonteAtivaForm.submitAdicionarFonte.data:
+            flash(f'Formulário não validado, cheque se há menos de três Fontes cadastradas!','danger')
+            return render_template('heroes.html', ativaForm=True, fontes=fontes, forms=forms)
+
+    return render_template('heroes.html', fontes=fontes, forms=forms)
 
 #Blog routes
 

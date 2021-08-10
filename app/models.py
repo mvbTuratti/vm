@@ -22,11 +22,10 @@ class Fonte(db.Model):
     atual = db.Column(db.Integer, nullable=False, default=total)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     available = db.Column(db.Integer, nullable=False)
-    
 
     def __repr__(self):
         return f"Fonte('{self.nome}','{self.atual}'/'{self.total}', '{self.image_file}')"
-
+    
 class Quantidade(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fonte = db.Column(db.Integer, db.ForeignKey('fonte.id'), nullable=False)
