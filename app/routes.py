@@ -66,7 +66,10 @@ def dashboard():
 @app.route("/app/album")
 @login_required
 def album():
-    return render_template('album.html')
+
+    bebidas = [{'imagem':url_for('static', filename=f'images/fontes/{bebida.image_file}'),
+                'nome':bebida.nome, 'total':bebida.total} for bebida in Bebida.query.all()]
+    return render_template('album.html', dinheiro=current_user.dinheiro, bebidas=bebidas)
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
