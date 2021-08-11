@@ -1,17 +1,19 @@
 import os
+import csv
+import datetime
 import secrets
 from PIL import Image
 from flask import render_template, url_for, request, redirect, jsonify, flash, request
 from app import app, db, bcrypt
 from app.models import Usuario, Fonte, Quantidade, Bebida, Vendas
-from app.forms import RegistrationForm, LoginForm, BebidaForm, PesoForm, DinheiroForm, FontesAtivarForm, FontesRemoverForm
+from app.forms import RegistrationForm, LoginForm, BebidaForm, PesoForm, DinheiroForm, FontesAtivarForm, RemoverFonteForm
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/app",  methods=['POST', 'GET'])
 def root_app():
     if current_user.is_authenticated:
         if current_user.admin == 1:
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('heroes'))
         else:
             return redirect(url_for('album'))
 
@@ -27,7 +29,7 @@ def root_app():
     return render_template('sing-in.html', form=form)
 
 @app.route("/app/registration",  methods=['POST', 'GET'])
-def registration():
+def registration(): 
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -43,7 +45,7 @@ def registration():
             db.session.add(Usuario(**dic))
             db.session.commit()
             flash(f'Conta {form.username.data} criada com sucesso!', 'success')
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('heroes'))
     
     return render_template('register.html', form=form)
 
@@ -77,15 +79,51 @@ def save_picture(form_picture):
     i.save(picture_path)
     return picture_fn
 
+def log_peso(valor):
+    file = os.path.join(app.root_path,"logpesos.csv")
+    data = [datetime.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ"),valor]
+    def older_than_last(time):
+        rows = []
+        with open(file, 'r') as csvfile:
+            csvreader = csv.reader(csvfile)
+            fields = next(csvreader)
+            for row in csvreader:
+                rows.append(row)
+        return True if len(rows) <= 1 else rows[-1][0] < time
+
+    if not os.path.isfile(file):
+        with open(file,'w', newline='', encoding='utf-8') as c:
+            cw = csv.writer(c)
+            cw.writerow(['Horario','Peso'])
+        
+    with open(file,'a', newline='', encoding='utf-8') as c:
+        cw = csv.writer(c)
+        if older_than_last(data[0]):
+            cw.writerow(data)
+    return valor
+
+def get_last_peso():
+    file = os.path.join(app.root_path,"logpesos.csv")
+    rows = []
+    with open(file, 'r') as csvfile:
+        csvreader = csv.reader(csvfile)
+        fields = next(csvreader)
+        for row in csvreader:
+            rows.append(row)
+    return 0 if len(rows) <= 1 else rows[-1][1]
 
 @app.route("/app/heroes", methods=['GET', 'POST'])
 @login_required
 def heroes():
+    if current_user.admin == 0:
+        return redirect(url_for('album'))
     bebidaForm = BebidaForm()
     pesoForm= PesoForm()
     dinheiroForm = DinheiroForm()
     fonteAtivaForm = FontesAtivarForm()
-    forms = {'bebidaForm':bebidaForm, 'pesoForm':pesoForm,'dinheiroForm':dinheiroForm, 'fonteAtivaForm':fonteAtivaForm}
+    fonteRmForm = RemoverFonteForm()
+    peso_atual = get_last_peso()
+    forms = {'bebidaForm':bebidaForm, 'pesoForm':pesoForm,'dinheiroForm':dinheiroForm, 'fonteAtivaForm':fonteAtivaForm, 'fonteRmForm':fonteRmForm}
     fontes = [{'imagem':url_for('static', filename=f'images/fontes/{fonte.image_file}'),
                 'nome':fonte.nome,
                 'quantidade':f'{fonte.atual}ml/{fonte.total}ml'} for fonte in Fonte.query.filter_by(available=1)]
@@ -94,6 +132,7 @@ def heroes():
             'nome': 'Sem fonte cadastrada',
             'quantidade': '0ml/0ml'}]
     dinheiroForm.usuarios.choices = [("", "Escolha um cliente")] + [(i.username,i.username) for i in Usuario.query.all() if i.admin==0]
+    fonteRmForm.fontes.choices = [("", "Escolha uma fonte")] + [(i.nome,i.nome) for i in Fonte.query.filter_by(available=1)]
     if request.method == 'POST':
         if bebidaForm.validate_on_submit():
             if bebidaForm.picture.data:
@@ -101,7 +140,7 @@ def heroes():
             
             return redirect(url_for('album'))
         elif bebidaForm.submitBebida.data:
-            return render_template('heroes.html', bebidaClick=True, fontes=fontes, forms=forms)
+            return render_template('heroes.html',peso_atual=peso_atual, bebidaClick=True, fontes=fontes, forms=forms)
 
         if forms['dinheiroForm'].validate_on_submit():
             try:
@@ -114,12 +153,17 @@ def heroes():
                 flash(f'Um erro ocorreu!','danger')
             return redirect(url_for('heroes'))
         elif dinheiroForm.submitDinheiro.data:
-            return render_template('heroes.html', dinheiroClick=True, fontes=fontes, forms=forms)
+            return render_template('heroes.html',peso_atual=peso_atual, dinheiroClick=True, fontes=fontes, forms=forms)
         
         if pesoForm.validate_on_submit():
-            return redirect(url_for('album'))
+            try:
+                val = log_peso(pesoForm.userPeso.data)
+                flash(f'O peso de {val}ml foi cadastrado com sucesso!','success')
+            except:
+                flash('Houve um erro na hora do cadastro', "danger")
+            return redirect(url_for('heroes'))
         elif pesoForm.submitPeso.data:
-            return render_template('heroes.html', pesoClick=True, fontes=fontes, forms=forms)
+            return render_template('heroes.html',peso_atual=peso_atual, pesoClick=True, fontes=fontes, forms=forms)
         if fonteAtivaForm.validate_on_submit():
             dic = {'nome':fonteAtivaForm.nome_fonte.data, 'total':fonteAtivaForm.atual.data,'atual':fonteAtivaForm.atual.data, 'available':1}
             if fonteAtivaForm.image_fonte.data:
@@ -138,9 +182,21 @@ def heroes():
             return redirect(url_for('heroes'))
         elif fonteAtivaForm.submitAdicionarFonte.data:
             flash(f'Formulário não validado, cheque se há menos de três Fontes cadastradas!','danger')
-            return render_template('heroes.html', ativaForm=True, fontes=fontes, forms=forms)
+            return render_template('heroes.html',peso_atual=peso_atual, ativaForm=True, fontes=fontes, forms=forms)
+    
+        if fonteRmForm.validate_on_submit():
+            try:
+                Fonte.query.filter_by(nome=forms['fonteRmForm'].fontes.data).first().available = 0
+                db.session.commit()
+                flash(f"Fonte {forms['fonteRmForm'].fontes.data} removida!",'success')
+            except:
+                db.session.rollback()
+                flash('Não foi possível remover a fonte', 'danger')
+            return redirect(url_for('heroes'))
+        elif fonteRmForm.submitRemoverFonte.data:
+            return render_template('heroes.html',peso_atual=peso_atual, rmForm=True, fontes=fontes, forms=forms)
 
-    return render_template('heroes.html', fontes=fontes, forms=forms)
+    return render_template('heroes.html',peso_atual=peso_atual, fontes=fontes, forms=forms)
 
 #Blog routes
 

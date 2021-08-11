@@ -59,12 +59,12 @@
       {% endwith %}
     </div>
     <img src="{{ url_for('static', filename='svg/moisture.svg') }}" width="65" >
-    <h1 class="display-5 fw-bold">Cadastro de Peso</h1>
+    <h1 class="display-5 fw-bold">Cadastro de Peso Limite do Copo</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Opte entre utilizar valor histórico ou cadastrar a leitura atual do sensor de peso.</p>
+      <p class="lead mb-4">Consulte o valor salvo e registre um novo valor limite em ml de um copo.</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal" data-bs-target="#cadastroPeso" id="pesoModal">Ler o sensor</button>
-        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Valor histórico</button>
+        <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal" data-bs-target="#cadastroPeso" id="pesoModal">Registrar um Peso</button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4" id="pesoAtualBtn">Valor Atual</button>
       </div>
     </div>
   </div>
@@ -75,21 +75,22 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="cadastroPesoLabel">Pesagem em andamento</h5>
+            <h5 class="modal-title" id="cadastroPesoLabel">Cadastre o Peso Limite do Copo (em ml)</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="form-floating">
+              
               {% if forms['pesoForm'].userPeso.errors %}
-                  {{ forms['pesoForm'].userPeso(class="forms['pesoForm']-control is-invalid", placeholder="Senha") }}
+                  {{ forms['pesoForm'].userPeso(class="form-control is-invalid form-control-sm", placeholder="Peso em ml") }}
                   <div class="invalid-feedback">
                       {% for error in forms['pesoForm'].userPeso.errors %}
                           <span>{{ error }}</span>
                       {% endfor %}
                   </div>
               {% else %}
-                  {{ forms['pesoForm'].userPeso(class="form-control", placeholder="Senha") }}
-              {% endif %}            
+                  {{ forms['pesoForm'].userPeso(class="form-control form-control-sm", placeholder="Peso em ml") }}
+              {% endif %}
           </div>
           </div>
           <div class="modal-footer">
@@ -100,11 +101,23 @@
       </div>
     </div>
   </form>
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img src="{{ url_for('static', filename='svg/cup-straw.svg') }}" class="rounded me-2" alt="SB">
+        <strong class="me-auto">SmartBar</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        O peso atual é {{ peso_atual }}ml
+      </div>
+    </div>
+  </div>
   <div class="b-example-divider"></div>
 
   <div class="container col-xxl-8 px-4 py-5">
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-10 col-sm-8 col-lg-6 border rounded-3 bg-light" >
+      <div class="col-10 col-sm-8 col-lg-6 border rounded-3 bg-light" style="background-color: rgb(99, 99, 99);">
         <div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="carousel">
           <div class="carousel-indicators">
             <button type="button" style="background-color: rgb(99, 99, 99);" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -113,21 +126,21 @@
           </div>
           <div class="carousel-inner" >
             <div class="carousel-item active" >
-              <img src="{{ fontes[0].imagem }}" class="d-block w-100" alt="fontes[0]">
+              <img src="{{ fontes[0].imagem }}" class="d-block w-100 rounded" alt="fontes[0]">
               <div class="carousel-caption d-none d-md-block">
                 <h5 class="strokeme">{{ fontes[0].nome }}</h5>
                 <p class="strokeme">{{ fontes[0].quantidade }}</p>
               </div>
             </div>
             <div class="carousel-item">
-              <img src="{{ fontes[1].imagem }}" class="d-block w-100" alt="fontes[1]">
+              <img src="{{ fontes[1].imagem }}" class="d-block w-100 rounded" alt="fontes[1]">
               <div class="carousel-caption d-none d-md-block">
                 <h5 class="strokeme">{{ fontes[1].nome }}</h5>
                 <p class="strokeme">{{ fontes[1].quantidade }}</p>
               </div>
             </div>
             <div class="carousel-item">
-              <img src="{{ fontes[2].imagem }}" class="d-block w-100" alt="fontes[2]">
+              <img src="{{ fontes[2].imagem }}" class="d-block w-100 rounded" alt="fontes[2]">
               <div class="carousel-caption d-none d-md-block">
                 <h5 class="strokeme">{{ fontes[2].nome }}</h5>
                 <p class="strokeme">{{ fontes[2].quantidade }}</p>
@@ -149,7 +162,7 @@
         <p class="lead">As opções a seguir são as atualmente ativas com seus respectivos valores, caso deseje cadastrar uma nova clique em cadastro, caso queira remover uma fonte clique em remover.</p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
           <button type="button" id="ativaForm" class="btn btn-primary btn-lg px-4 me-md-2 " data-bs-toggle="modal" data-bs-target="#cadastroFonte">Cadastro</button>
-          <button type="button" class="btn btn-danger btn-lg px-4 me-md-2 " data-bs-toggle="modal" data-bs-target="#removerFonte">Remover</button>
+          <button type="button" id="removeForm" class="btn btn-danger btn-lg px-4 me-md-2 " data-bs-toggle="modal" data-bs-target="#removerFonte">Remover</button>
         </div>
       </div>
     </div>
@@ -211,12 +224,22 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+          <form action="" method="POST">
+            {{ forms['fonteRmForm'].hidden_tag() }} 
+                <div>
+                  {{ forms['fonteRmForm'].fontes(class="form-select form-select-lg mb-3") }}
+                  {% if forms['fonteRmForm'].fontes.errors %}
+                    {% for error in forms['fonteRmForm'].fontes.errors %}
+                    <span class="text-danger">{{ error }}</span></br>
+                    {% endfor %}
+                  {% endif %}
+                </div> 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary">Salvar Alterações</button>
+          {{ forms['fonteRmForm'].submitRemoverFonte(class="btn btn-primary") }}
         </div>
+      </form>
       </div>
     </div>
   </div>
@@ -276,10 +299,9 @@
     <img src="{{ url_for('static', filename='svg/cup-straw.svg') }}" width="85" >
     <h1 class="display-5 fw-bold">Cadastro de Bebida</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Escolha entre opção de criação de uma bebida com as Fontes ativas ou criar um com opções de Fontes previamente cadastradas e inativas.</p>
+      <p class="lead mb-4">Crie uma receita utilizando uma combinação das fontes disponíveis, atribua um custo e uma imagem para que os Clientes possam consumir</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal" data-bs-target="#fontesAtivas" id="fontesAtivasBtn">Fontes Ativas</button>
-        <button type="button" class="btn btn-warning btn-lg px-4" data-bs-toggle="modal" data-bs-target="#fontesInativas">Fontes Inativas</button>
       </div>
     </div>
   </div>
@@ -329,6 +351,7 @@
       </div>
     </div>
   </div>
+  
 </main>
 
 
@@ -345,6 +368,19 @@
       }
       else if ('{{ dinheiroClick }}'){
         document.getElementById('dinheiroModal').scrollIntoView();
+      }
+      else if ('{{ rmForm }}'){
+        document.getElementById('removeForm').click();
+      }
+      
+      var toastTrigger = document.getElementById('pesoAtualBtn')
+      var toastLiveExample = document.getElementById('liveToast')
+      
+      if (toastTrigger) {
+        toastTrigger.addEventListener('click', function () {
+          var toast = new bootstrap.Toast(toastLiveExample)
+          toast.show()
+        })
       }
     </script>
       

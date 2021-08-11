@@ -47,8 +47,16 @@ class PesoForm(FlaskForm):
     def validate_click_peso(form,field):
         if not form.submitPeso.data:
             raise ValidationError('Botão não selecionado')
+    
+    def number_validator(form, field):
+        try:
+            numb = int(form.userPeso.data)
+            if numb < 0:
+                raise ValidationError('Peso limite precisa ser um inteiro positivo')
+        except:
+            raise ValidationError('Apenas números inteiros são aceitos')
 
-    userPeso = StringField('User', validators=[DataRequired(), Length(min=4)])
+    userPeso = StringField('Peso limite de um copo (em ml)', validators=[DataRequired(), number_validator])
     submitPeso = SubmitField('Cadastrar', validators=[validate_click_peso])
 
 class DinheiroForm(FlaskForm):
@@ -66,6 +74,21 @@ class DinheiroForm(FlaskForm):
     dinheiro = IntegerField('Valor', validators=[DataRequired()])
     senha = PasswordField('Senha', validators=[DataRequired(), Length(min=6, max=20), check_pwd] )
     submitDinheiro = SubmitField('Pontuar', validators=[validate_click_dinheiro])
+
+class RemoverFonteForm(FlaskForm):
+    def validate_click_rm(form,field):
+        if not form.submitRemoverFonte.data:
+            raise ValidationError('Botão não selecionado') 
+
+    def check_available(form, field):
+        f = Fonte.query.filter_by(nome=form.fontes.data).first()
+        if not f:
+            raise ValidationError('Selecione uma fonte')
+        elif not f.available:
+            raise ValidationError('Fonte não ativa')
+
+    fontes = SelectField('Fontes', choices=[], validators=[check_available])
+    submitRemoverFonte = SubmitField('Remover', validators=[validate_click_rm])
     
 class FontesAtivarForm(FlaskForm):
     def three_active(form, field):
