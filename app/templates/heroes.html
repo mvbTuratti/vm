@@ -79,19 +79,26 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="form-floating">
-              
-              {% if forms['pesoForm'].userPeso.errors %}
-                  {{ forms['pesoForm'].userPeso(class="form-control is-invalid form-control-sm", placeholder="Peso em ml") }}
-                  <div class="invalid-feedback">
-                      {% for error in forms['pesoForm'].userPeso.errors %}
-                          <span>{{ error }}</span>
-                      {% endfor %}
+            
+            <div class="container">
+              <div class="row justify-content-center">
+                {% if forms['pesoForm'].userPeso.errors %}
+                  <div class="col-6">
+                    {{ forms['pesoForm'].userPeso(class="form-control is-invalid", type="number", min=1, placeholder="Peso limite em ml") }}
+                  
+                    <div class="invalid-feedback">
+                        {% for error in forms['pesoForm'].userPeso.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
                   </div>
-              {% else %}
-                  {{ forms['pesoForm'].userPeso(class="form-control form-control-sm", placeholder="Peso em ml") }}
-              {% endif %}
-          </div>
+                {% else %}
+                  <div class="col-6">
+                    {{ forms['pesoForm'].userPeso(class="form-control", type="number", min=1, placeholder="Peso limite em ml") }}
+                    </div>
+                {% endif %}
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -126,21 +133,21 @@
           </div>
           <div class="carousel-inner" >
             <div class="carousel-item active" >
-              <img src="{{ fontes[0].imagem }}" class="d-block w-100 rounded" alt="fontes[0]">
+              <img src="{{ fontes[0].imagem }}" width="480" height="480" class="d-block w-100 rounded" alt="fontes[0]">
               <div class="carousel-caption d-none d-md-block">
                 <h5 class="strokeme">{{ fontes[0].nome }}</h5>
                 <p class="strokeme">{{ fontes[0].quantidade }}</p>
               </div>
             </div>
             <div class="carousel-item">
-              <img src="{{ fontes[1].imagem }}" class="d-block w-100 rounded" alt="fontes[1]">
+              <img src="{{ fontes[1].imagem }}" width="480" height="480" class="d-block w-100 rounded" alt="fontes[1]">
               <div class="carousel-caption d-none d-md-block">
                 <h5 class="strokeme">{{ fontes[1].nome }}</h5>
                 <p class="strokeme">{{ fontes[1].quantidade }}</p>
               </div>
             </div>
             <div class="carousel-item">
-              <img src="{{ fontes[2].imagem }}" class="d-block w-100 rounded" alt="fontes[2]">
+              <img src="{{ fontes[2].imagem }}" width="480" height="480" class="d-block w-100 rounded" alt="fontes[2]">
               <div class="carousel-caption d-none d-md-block">
                 <h5 class="strokeme">{{ fontes[2].nome }}</h5>
                 <p class="strokeme">{{ fontes[2].quantidade }}</p>
@@ -187,25 +194,32 @@
                   {% endfor %}
               </div>
             {% else %}
-            <div class="input-group mb-3">
-                {{ forms['fonteAtivaForm'].nome_fonte(class="form-control", placeholder="Nome da Fonte") }}
-              
-            </div>   
-            {% endif %}
-              {{ forms['fonteAtivaForm'].atual(class="form-control", placeholder="Quantidade em ml") }}
-              {% if forms['fonteAtivaForm'].atual.errors %}
-                {% for error in forms['fonteAtivaForm'].atual.errors %}
-                  <span class="text-danger">{{ error }}</span></br>
-                {% endfor %}
+            <div class="form-control">
+              <div class="input-group mb-3">
+                  {{ forms['fonteAtivaForm'].nome_fonte(class="form-control", placeholder="Nome da Fonte") }}
+                
+              </div>   
               {% endif %}
-            <div class="input-group mb-3">
-              {{ forms['fonteAtivaForm'].image_fonte(class="form-control-file") }}
-              {% if forms['fonteAtivaForm'].image_fonte.errors %}
-                {% for error in forms['fonteAtivaForm'].image_fonte.errors %}
+              <div class="input-group mb-3">
+                {{ forms['fonteAtivaForm'].atual(class="form-control", type="number", min=0) }}
+                {{ forms['fonteAtivaForm'].atual.label(class="form-control") }}
+              </div>
+                {% if forms['fonteAtivaForm'].atual.errors %}
+                  {% for error in forms['fonteAtivaForm'].atual.errors %}
                     <span class="text-danger">{{ error }}</span></br>
-                {% endfor %}
-              {% endif %}
-
+                  {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-control">
+                <div class="input-group mb-3">
+              
+                {{ forms['fonteAtivaForm'].image_fonte(class="form-control-file") }}
+                {% if forms['fonteAtivaForm'].image_fonte.errors %}
+                  {% for error in forms['fonteAtivaForm'].image_fonte.errors %}
+                      <span class="text-danger">{{ error }}</span></br>
+                  {% endfor %}
+                {% endif %}
+              </div>
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -266,7 +280,7 @@
             <div class="form-floating mb-3">
             <div class="input-group">
               <span class="input-group-text"><img src="{{ url_for('static', filename='svg/currency-bitcoin.svg') }}" ></span>
-              {{ forms['dinheiroForm'].dinheiro(class="form-control") }}
+              {{ forms['dinheiroForm'].dinheiro(class="form-control", type="number", min=0) }}
               
             </div>
               {% if forms['dinheiroForm'].dinheiro.errors %}
@@ -316,14 +330,82 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="form-floating">
-              {{ forms['bebidaForm'].picture(class="form-control-file") }}
-              {% if forms['bebidaForm'].picture.errors %}
-                {% for error in forms['bebidaForm'].picture.errors %}
-                    <span class="text-danger">{{ error }}</span></br>
-                {% endfor %}
-              {% endif %}
+            
+            {% if forms['bebidaForm'].submitBebida.errors %}
+              {% for message in forms['bebidaForm'].submitBebida.errors %}
+                <div class="content alert alert-danger small" id="hideMe">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          
+            <div class="form-control">
+              
+                {% if fontes_disponiveis %}
+                  <div class="accordion" id="accordionExample">
+                  {% for font in fontes_disponiveis %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="{{ font['nome'] }}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#{{ font['idunique'] }}" aria-expanded="false" aria-controls="{{ font['idunique'] }}">
+                          {{ font['nome'] }}
+                        </button>
+                      </h2>
+                      <div id="{{ font['idunique'] }}" class="accordion-collapse collapse" aria-labelledby="{{ font['nome'] }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                          <div class="input-group mb-3">
+                            {% if font['fonte_nm'] == 1 %}
+                              <div class="input-group-text">
+                                {{ forms['bebidaForm'].fonte1(class="form-check-input") }}
+                              </div>
+                              {{ forms['bebidaForm'].quantidade_fonte1(class="form-control", type="number", min=1, max=font['quantidade']) }}
+                              {{ forms['bebidaForm'].quantidade_fonte1.label(class="form-control") }}
+                            {% endif %}
+                            {% if font['fonte_nm'] == 2 %}
+                              <div class="input-group-text">
+                                {{ forms['bebidaForm'].fonte2(class="form-check-input") }}
+                              </div>
+                              {{ forms['bebidaForm'].quantidade_fonte2(class="form-control", type="number", min=1, max=font['quantidade']) }}
+                              {{ forms['bebidaForm'].quantidade_fonte2.label(class="form-control") }}
+                            {% endif %}
+                            {% if font['fonte_nm'] == 3 %}
+                              <div class="input-group-text">
+                                {{ forms['bebidaForm'].fonte3(class="form-check-input") }}
+                              </div>
+                              {{ forms['bebidaForm'].quantidade_fonte3(class="form-control", type="number", min=1, max=font['quantidade']) }}
+                              {{ forms['bebidaForm'].quantidade_fonte3.label(class="form-control") }}
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                  </div>
+                {% else %}
+                  <h3><strong>Nenhuma fonte cadastrada!</strong></h3>
+                {% endif %}
             </div>
+            <div class="form-control">
+              <div class="form-floating">
+                <div class="mb-3">
+                  <label for="nome_fonte_bebida" class="form-label">Nome da Bebida</label>
+                  {{ forms['bebidaForm'].nome_bebida(class="form-control", id="nome_fonte_bebida") }}
+                </div>
+                <div class="mb-3">
+                  <label for="custo_bebida" class="form-label">Custo da Bebida</label>
+                  {{ forms['bebidaForm'].custo_bebida(class="form-control", id="custo_bebida", type="number", min=0) }}
+                </div>
+              </div>
+              <div class="form-floating">
+                
+                  {{ forms['bebidaForm'].picture(class="form-control-file") }}
+                  {% if forms['bebidaForm'].picture.errors %}
+                    {% for error in forms['bebidaForm'].picture.errors %}
+                        <span class="text-danger">{{ error }}</span></br>
+                    {% endfor %}
+                  {% endif %}
+                
+              </div>
+            </div> 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -334,23 +416,7 @@
     </div>
   </form>
   
-  <div class="modal fade" id="fontesInativas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="fontesInativasLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="fontesInativasLabel">Cadastro de Bebidas com fontes registradas</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary">Criar Bebida</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  
   
 </main>
 

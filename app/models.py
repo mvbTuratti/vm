@@ -17,14 +17,14 @@ class Usuario(db.Model, UserMixin):
 
 class Fonte(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(18), unique=True, nullable=False)
+    nome = db.Column(db.String(18), nullable=False)
     total = db.Column(db.Integer, nullable=False)
     atual = db.Column(db.Integer, nullable=False, default=total)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     available = db.Column(db.Integer, nullable=False)
-
+    
     def __repr__(self):
-        return f"Fonte('{self.nome}','{self.atual}'/'{self.total}', '{self.image_file}')"
+        return f"Fonte('{self.nome}','{self.atual}'/'{self.total}', '{self.image_file}', available={self.available})"
     
 class Quantidade(db.Model):
     id = db.Column(db.Integer, primary_key=True)

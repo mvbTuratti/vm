@@ -59,6 +59,7 @@
 </header>
 
 <main>
+  <form action="{{ url_for('finalizar') }}" method="POST">
   <div class="col-md-16" id="container">
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -87,13 +88,13 @@
         {% for bebida in bebidas %}
         <div class="col">
           <div class="card shadow-sm">
-            <img src="{{ bebida.imagem }}" alt="{{ bebida.nome }}">
+            <img src="{{ bebida.imagem }}" style="max-height:320px;" class="d-block w-100 rounded" alt="{{ bebida.nome }}">
 
             <div class="card-body">
               <p class="card-text">{{ bebida.nome }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-primary">Comprar</button>
+                  <button type="submit" name="{{ bebida.nome }}" value="{{ bebida.total }}" class="btn btn-sm btn-outline-primary">Comprar</button>
                 </div>
                 <span style="display: block;">
                 <img role="img" src="{{ url_for('static', filename='svg/currency-bitcoin.svg') }}" width="18">
@@ -106,7 +107,7 @@
       </div>
     </div>
   </div>
-
+  </form>
 </main>
 
 

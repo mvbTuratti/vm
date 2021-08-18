@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Album example · Bootstrap v5.0</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/2020center.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/heroes.css') }}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      
+    </style>
+
+    
+  </head>
+  <body>
+    
+<header>
+  
+  <nav class="navbar navbar-expand-lg position-relative" style="background-color: #0c8195;">
+    <div class="container">
+        <div class="col-lg-2"><img src="{{ url_for('static', filename='svg/cup-straw.svg') }}" width="60">
+            <i class="bi bi-cup-straw"> <b>Smart</b>Bar</i></div>
+        <div class="d-flex bd-highlight">
+         
+            <img role="img" src="{{ url_for('static', filename='svg/currency-bitcoin.svg') }}" width="19">
+            {{ dinheiro }} 
+          
+        </div>
+        <div class="d-flex bd-highlight">
+            <div class="p-1 flex-fill bd-highlight">
+              <button type="button" class="btn btn-danger btn-sm"><a href="{{ url_for('logout') }}" style="color: inherit;text-decoration: none;">Logout</a></button>
+            </div>
+        </div>
+    </div>
+</nav>
+</header>
+
+<main>
+    <div class="col-md-16" id="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="content alert alert-{{ category }}" id="hideMe">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      </div>
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-5 fw-bold">Aquisição da Bebida {{ nome_bebida }}</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">Clique no botão abaixo para confirmar que o copo já está posicionado.</p>
+          <p class="lead mb-4"><strong style="color: red;">Caso o copo seja removido durante o processo a compra será interrompida e não haverá reembolsos!</strong></p>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <form action="" method="post">
+            <button name="{{ nome_bebida }}" id="submiter" value="submit" class="btn btn-primary" type="submit" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Meu copo já está posicionado!</button>
+            </form>
+            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Processo em andamento, aguarde!</h5>
+              </div>
+              <div class="offcanvas-body small">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    <div class="b-example-divider"></div>
+</main>
+
+
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+  
+</body>
+</html>
