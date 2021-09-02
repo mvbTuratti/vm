@@ -7,7 +7,7 @@ import msrest
 from azure.iot.hub import DigitalTwinClient
 
 lock = Lock()
-iothub_connection_str = "HostName=gaicoz.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=ZPFoIUbFXBzRjupPBTCFPSZGDsB8oEf2RQKz5jiQ2G8="
+iothub_connection_str = "" #string Azure iothub
 device_id = "rpi"
 command_name = "bombas"  
 connect_timeout_in_seconds = 3
